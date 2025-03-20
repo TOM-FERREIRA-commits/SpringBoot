@@ -1,10 +1,9 @@
 package com.EltonFerreira.bookstoremananger.controller;
 
+import com.EltonFerreira.bookstoremananger.dto.BookDTO;
 import com.EltonFerreira.bookstoremananger.dto.MessageResponseDTO;
-import com.EltonFerreira.bookstoremananger.entity.Book;
-import com.EltonFerreira.bookstoremananger.repository.BookRepository;
 import com.EltonFerreira.bookstoremananger.service.BookService;
-import org.apache.logging.log4j.message.Message;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private BookService bookService;
 
+    @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
     @PostMapping
-    public MessageResponseDTO create(@RequestBody Book book) {
-        return BookService.create(book);
+    public MessageResponseDTO create(@RequestBody @Valid BookDTO bookDTO) {
+        return bookService.create(bookDTO);
     }
 }
